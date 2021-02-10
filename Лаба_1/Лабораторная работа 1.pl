@@ -74,3 +74,6 @@ b_s(X):-b_s(X,Y),write(Y),nl,fail.
 
 grand_pa(X,Y):-man(X),parent(Z,Y),parent(X,Z).
 grand_pas(X):-grand_pa(Y,X),write(Y),nl,fail.
+
+grand_so(X,Y):-man(X),grand_pa(Y,X).
+grand_sons(X):-grand_so(Y,X),write(Y),nl,fail.
