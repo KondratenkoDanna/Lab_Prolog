@@ -36,3 +36,6 @@ parent(misha,konstantina).
 parent(misha,avdotia).
 parent(miroslava,konstantina).
 parent(miroslava,avdotia).
+
+man():-man(X),write(X),nl,fail.
+woman():-woman(X),write(X),nl,fail.
