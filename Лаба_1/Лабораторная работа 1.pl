@@ -39,3 +39,5 @@ parent(miroslava,avdotia).
 
 man():-man(X),write(X),nl,fail.
 woman():-woman(X),write(X),nl,fail.
+
+children(X):-parent(X,Y),write(Y),nl,fail.
