@@ -81,3 +81,5 @@ grand_sons(X):-grand_so(Y,X),write(Y),nl,fail.
 grand_pa_and_son(X,Y):-grand_so(X,Y);grand_pa(X,Y).
 
 grand_pa_and_da(X,Y):-woman(X),man(Y),parent(Y,Z),parent(Z,X);woman(Y),man(X),parent(X,Z),parent(Z,Y).
+
+uncle(X,Y):-man(X),parent(Z,Y),brother(Z,X),Z\=X.
