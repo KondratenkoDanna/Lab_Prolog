@@ -13,6 +13,7 @@ woman(zlata).
 woman(avdotia).
 woman(konstantina).
 woman(miroslava).
+woman(simona).
 
 parent(yura,danil).
 parent(yura,fyodor).
@@ -34,8 +35,10 @@ parent(rima,roma).
 
 parent(misha,konstantina).
 parent(misha,avdotia).
+parent(misha,simona).
 parent(miroslava,konstantina).
 parent(miroslava,avdotia).
+parent(miroslava,simona).
 
 man():-man(X),write(X),nl,fail.
 woman():-woman(X),write(X),nl,fail.
@@ -50,3 +53,6 @@ son(X):-son(Y,X),write(Y).
 
 brother(X,Y):-man(X),mother(Z,X),mother(Z,Y),X\=Y.
 brothers(X):-brother(Y,X),write(Y),nl,fail.
+
+sister(X,Y):-woman(X),mother(Z,X),mother(Z,Y),X\=Y.
+sisters(X):-sister(Y,X),write(Y),nl,fail.
