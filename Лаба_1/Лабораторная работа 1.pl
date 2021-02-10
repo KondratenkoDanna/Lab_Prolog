@@ -5,6 +5,8 @@ man(misha).
 man(kazimir).
 man(david).
 man(roma).
+man(ivan).
+man(leon).
 
 woman(darina).
 woman(rima).
@@ -15,6 +17,8 @@ woman(konstantina).
 woman(miroslava).
 woman(simona).
 woman(maria).
+woman(kira).
+woman(emma).
 
 parent(yura,danil).
 parent(yura,fyodor).
@@ -43,6 +47,11 @@ parent(miroslava,konstantina).
 parent(miroslava,avdotia).
 parent(miroslava,simona).
 
+parent(ivan,zlata).
+parent(kira,zlata).
+parent(leon,miroslava).
+parent(emma,miroslava).
+
 man():-man(X),write(X),nl,fail.
 woman():-woman(X),write(X),nl,fail.
 
@@ -62,3 +71,6 @@ sisters(X):-sister(Y,X),write(Y),nl,fail.
 
 b_s(X,Y):-mother(Z,X),mother(Z,Y),X\=Y.
 b_s(X):-b_s(X,Y),write(Y),nl,fail.
+
+grand_pa(X,Y):-man(X),parent(Z,Y),parent(X,Z).
+grand_pas(X):-grand_pa(Y,X),write(Y),nl,fail.
