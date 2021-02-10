@@ -41,3 +41,6 @@ man():-man(X),write(X),nl,fail.
 woman():-woman(X),write(X),nl,fail.
 
 children(X):-parent(X,Y),write(Y),nl,fail.
+
+mother(X,Y):-woman(X),parent(X,Y).
+mother(X):-parent(Y,X),woman(Y),write(Y).
