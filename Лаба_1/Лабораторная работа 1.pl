@@ -43,7 +43,10 @@ woman():-woman(X),write(X),nl,fail.
 children(X):-parent(X,Y),write(Y),nl,fail.
 
 mother(X,Y):-woman(X),parent(X,Y).
-mother(X):-parent(Y,X),woman(Y),write(Y).
+mother(X):-mother(Y,X),write(Y).
 
 son(X,Y):-man(X),parent(Y,X).
 son(X):-son(Y,X),write(Y).
+
+brother(X,Y):-man(X),mother(Z,X),mother(Z,Y),X\=Y.
+brothers(X):-brother(Y,X),write(Y),nl,fail.
