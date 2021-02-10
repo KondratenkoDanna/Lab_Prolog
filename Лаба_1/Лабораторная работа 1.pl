@@ -14,14 +14,17 @@ woman(avdotia).
 woman(konstantina).
 woman(miroslava).
 woman(simona).
+woman(maria).
 
 parent(yura,danil).
 parent(yura,fyodor).
 parent(yura,misha).
+parent(yura,maria).
 
 parent(mila,danil).
 parent(mila,fyodor).
 parent(mila,misha).
+parent(mila,maria).
 
 parent(danil,david).
 parent(danil,kazimir).
@@ -56,3 +59,6 @@ brothers(X):-brother(Y,X),write(Y),nl,fail.
 
 sister(X,Y):-woman(X),mother(Z,X),mother(Z,Y),X\=Y.
 sisters(X):-sister(Y,X),write(Y),nl,fail.
+
+b_s(X,Y):-mother(Z,X),mother(Z,Y),X\=Y.
+b_s(X):-b_s(X,Y),write(Y),nl,fail.
