@@ -60,7 +60,12 @@ length_list([],0):-!.
 length_list([_|T],L):-length_list(T,L1),L is L1+1.
 
 		%___________5___________ 
-		
+index_end_all:-read_str(Sr,Length,0),reverse(Sr,[H|T],Sr1),EndS = H,list_entry_el(Sr,EndS,N).	
+
+list_entry_el([H|T],El,Num):-list_entry_el([H|T],El,Num,0).
+list_entry_el([],_,_,_):-!.
+list_entry_el([H|T],El,Num,Chet):-Chet1 is Chet+1,(H = El,
+			Num1 = Chet1 -> write(Chet1),write(" "),list_entry_el(T,El,Num1,Chet1);list_entry_el(T,El,Num,Chet1)).
 
 		%___________6___________
 		%___________7___________
