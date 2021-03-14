@@ -68,6 +68,12 @@ list_entry_el([H|T],El,Num,Chet):-Chet1 is Chet+1,(H = El,
 			Num1 = Chet1 -> write(Chet1),write(" "),list_entry_el(T,El,Num1,Chet1);list_entry_el(T,El,Num,Chet1)).
 
 		%___________6___________
+index_3:-read_str(St,Length,0),index_3(St,0).
+index_3([],_):-!.
+index_3([H|T],Counter):-Counter1 is Counter+1,(0 is Counter1 mod 3 -> put(H),index_3(T,Counter1);
+						index_3(T,Counter1)).
+
+
 		%___________7___________
 		%___________8___________
 		%___________9___________
