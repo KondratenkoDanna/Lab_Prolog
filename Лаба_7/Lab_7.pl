@@ -100,6 +100,11 @@ write_n(0,_):-!.
 write_n(N,St):-write_str(St),N1 is N-1,write_n(N1,St).
 
 		%___________10___________
+begin_word:-read_str(St,_),begin_word(St,St1),write_str(St1).
+
+begin_word([H1,H2,H3|T],List1):-H1=97,H2=98,H3=99,List1 = [119,119,119|T],!.
+begin_word(List,List1):-append1(List,[122,122,122],List1),!.
+
 		%___________11___________
 		%___________12___________
 		%___________13___________
