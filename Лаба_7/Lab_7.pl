@@ -145,6 +145,11 @@ replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,append1([H],NSt,NSt1),
 
 		%___________14___________
 		%___________15___________
+st_abc:-read_str(St,_),st_abc(St).
+st_abc([]):-!.
+st_abc([H|T]):-H\=97,H\=98,H\=99,!,fail.
+st_abc([H|T]):-st_abc(T).
+
 		%___________16___________
 		%___________17___________
 		%___________18___________
