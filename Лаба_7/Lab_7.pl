@@ -106,6 +106,11 @@ begin_word([H1,H2,H3|T],List1):-H1=97,H2=98,H3=99,List1 = [119,119,119|T],!.
 begin_word(List,List1):-append1(List,[122,122,122],List1),!.
 
 		%___________11___________
+l_str:-read_str(St,Length),(Length>10 -> l_str(St,StN);l_str(St,Length,12,StN)),write_str(StN).
+l_str(St,StN):- StN = [_,_,_,_,_,_],append1(StN,_,St),!.
+l_str(StN,12,Length,StN):-!.
+l_str(St,L,Length,StN):-L1 is L+1,append1(St,[111],St1),l_str(St1,L1,Length,StN).
+
 		%___________12___________
 		%___________13___________
 		%___________14___________
