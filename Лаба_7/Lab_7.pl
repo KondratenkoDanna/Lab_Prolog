@@ -70,16 +70,25 @@ index_3([H|T],Counter):-Counter1 is Counter+1,(0 is Counter1 mod 3 -> put(H),ind
 						index_3(T,Counter1)).
 
 		%___________7___________
-kol_plus_minus:-read_str(St,_),kol_plus_minus(St,0,KP,0,KM),kol_zero(St,0,KZ),write("Plus = "),write(KP),nl,write("Minus = "),write(KM),nl,write("Zero = "),write(KZ),!.
-kol_plus_minus([],KP,KP,KM,KM):-!.
 kol_zero([_|[]],KZ,KZ):-!.
 kol_zero([H1|[H2|T3]],KZero,KolZero):-((H1=43;H1=45),H2=48 -> KZero1 is KZero+1,kol_zero([H2|T3],KZero1,KolZero);kol_zero([H2|T3],KZero,KolZero)).
+kol_plus_minus:-read_str(St,_),kol_plus_minus(St,0,KP,0,KM),kol_zero(St,0,KZ),write("Plus = "),write(KP),nl,write("Minus = "),write(KM),nl,write("Zero = "),write(KZ),!.
+kol_plus_minus([],KP,KP,KM,KM):-!.
 kol_plus_minus([43|T],KP,KolP,KM,KolM):-KP1 is KP+1,kol_plus_minus(T,KP1,KolP,KM,KolM).
 kol_plus_minus([45|T],KP,KolP,KM,KolM):-KM1 is KM+1,kol_plus_minus(T,KP,KolP,KM1,KolM).
 kol_plus_minus([_|T],KP,KolP,KM,KolM):-kol_plus_minus(T,KP,KolP,KM,KolM).
 
 		%___________8___________
+list_el_num([H|T],El,Num):-list_el_num([H|T],El,Num,0).
+list_el_num([],119,0,_):-write("w no exist"),nl,!.
+list_el_num([],120,0,_):-write("x no exist"),nl,!.
+list_el_num([],_,0,_):-!.
+list_el_num([H|T],El,Num,Chet):-Chet1 is Chet+1,(H = El,
+			Num = Chet1 -> !;list_el_num(T,El,Num,Chet1)).
 
+w_v:-read_str(St,_),write(St),nl,w_v(St).
+w_v(St):-list_el_num(St,119,N1),list_el_num(St,120,N2),N1\=N2,
+				  (N1<N2 -> write("Exist: "),put(119),nl;write("Exist: "),put(120)).
 
 		%___________9___________
 length_list([],K,K):-!.
@@ -89,7 +98,6 @@ big_st:-read_str(St1,N1),read_str(St2,N2),(N1>N2 -> N3 is N1-N2,write_n(N3,St1);
 		write_n(N3,St2)).
 write_n(0,_):-!.
 write_n(N,St):-write_str(St),N1 is N-1,write_n(N1,St).
-		
 
 		%___________10___________
 		%___________11___________
