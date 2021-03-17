@@ -18,6 +18,14 @@ reverse(A, Z) :- reverse(A,Z,[]).
 reverse([],Z,Z).
 reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
 
+min_list_down([H|T],Min):-min_list_down([H|T],255,Min).
+min_list_down([],Min,Min):-!.
+min_list_down([H|T],M,Min):-(H<M -> M1 is H,min_list_down(T,M1,Min);
+		            min_list_down(T,M,Min)).
+
+reverse_list(List,ListR):-reverse_list(List,[],ListR).
+reverse_list([],Buffer,Buffer):-!.
+reverse_list([H|T],Buffer,ListR):-reverse_list(T,[H|Buffer],ListR).
 
 		%___________1___________
 wr_str:-read_str(A,Length),write_str(A),write(","),write_str(A),write(","),
@@ -111,8 +119,30 @@ l_str(St,StN):- StN = [_,_,_,_,_,_],append1(StN,_,St),!.
 l_str(StN,12,Length,StN):-!.
 l_str(St,L,Length,StN):-L1 is L+1,append1(St,[111],St1),l_str(St1,L1,Length,StN).
 
-		%___________12___________
+		%___________12___________///////////////////////////////////////
+%fragments:-read_str(St,_),fragments(St,LFr),wri,sort(LFr).
+%%fragments([],LFr):-!.
+%fragments([H1,H2,H3|T],LFr):-rand_fr([H1,H2,H3],R),fragments(T,[R|LFr]).
+%rand_fr([H1,H2,H3],R):-H is random(256),(not(in_list([H1,H2,H3],H)) -> R = [H1,H,H3];
+%					   rand_fr([H1,H2,H3],R)).					   
+
+%sort([]):-!.
+%sort([H|T]):-min_list_down([H|T],Min),write_str(Min),remove_number([H|T],Min,LN),sort(LN).
+
+remove_number([H1|T1],X,List):-remove_number([H1|T1],[],List,X).
+remove_number([],Buffer,List2,_):-reverse_list(Buffer,List2),!.
+remove_number([H1|T1],Buffer,List2,X):-(H1=X -> remove_number(T1,Buffer,X);
+								 remove_number(T1,[H1|Buffer],List2,X)).
+
 		%___________13___________
+replace_4:-read_str(St,_),replace_4(St,0,[],NSt),reverse(NSt,NStR),write_str(NStR).
+replace_4([],_,St,St):-!.
+replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,0 is Counter1 mod 2,(H\=97,H\=98 
+								    -> append1([97],NSt,NSt1),replace_4(T,Counter1,NSt1,NStr),!;
+								    append1([99],NSt,NSt1),replace_4(T,Counter1,NSt1,NStr)),!.
+replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,append1([H],NSt,NSt1),
+								   replace_4(T,Counter1,NSt1,NStr).
+
 		%___________14___________
 		%___________15___________
 		%___________16___________
