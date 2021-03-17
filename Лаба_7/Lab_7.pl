@@ -143,7 +143,12 @@ replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,0 is Counter1 mod 2,(H\
 replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,append1([H],NSt,NSt1),
 								   replace_4(T,Counter1,NSt1,NStr).
 
-		%___________14___________
+		%___________14___________48-57
+kol_numbers:-read_str(St,_),kol_numbers(St,0,Kol),write(Kol).
+kol_numbers([],K,K):-!.
+kol_numbers([H|T],K,Kol):-H>47,H<58,K1 is K+1,kol_numbers(T,K1,Kol),!.
+kol_numbers([H|T],K,Kol):-kol_numbers(T,K,Kol),!.
+
 		%___________15___________
 st_abc:-read_str(St,_),st_abc(St).
 st_abc([]):-!.
