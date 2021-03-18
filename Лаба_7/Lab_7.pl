@@ -116,7 +116,7 @@ begin_word(List,List1):-append1(List,[122,122,122],List1),!.
 		%___________11___________
 l_str:-read_str(St,Length),(Length>10 -> l_str(St,StN);l_str(St,Length,12,StN)),write_str(StN).
 l_str(St,StN):- StN = [_,_,_,_,_,_],append1(StN,_,St),!.
-l_str(StN,12,Length,StN):-!.
+l_str(StN,12,_,StN):-!.
 l_str(St,L,Length,StN):-L1 is L+1,append1(St,[111],St1),l_str(St1,L1,Length,StN).
 
 		%___________12___________///////////////////////////////////////
@@ -147,16 +147,27 @@ replace_4([H|T],Counter,NSt,NStr):-Counter1 is Counter+1,append1([H],NSt,NSt1),
 kol_numbers:-read_str(St,_),kol_numbers(St,0,Kol),write(Kol).
 kol_numbers([],K,K):-!.
 kol_numbers([H|T],K,Kol):-H>47,H<58,K1 is K+1,kol_numbers(T,K1,Kol),!.
-kol_numbers([H|T],K,Kol):-kol_numbers(T,K,Kol),!.
+kol_numbers([_|T],K,Kol):-kol_numbers(T,K,Kol),!.
 
 		%___________15___________
 st_abc:-read_str(St,_),st_abc(St).
 st_abc([]):-!.
-st_abc([H|T]):-H\=97,H\=98,H\=99,!,fail.
-st_abc([H|T]):-st_abc(T).
+st_abc([H|_]):-H\=97,H\=98,H\=99,!,fail.
+st_abc([_|T]):-st_abc(T).
 
 		%___________16___________
+replace_word:-read_str(St,_),replace_word(St,[],NL),write_str(NL).
+replace_word([],NL,NL):-!.
+replace_word([H1,H2,H3,H4|T],Buffer,NL):-H1=119,H2=111,H3=114,H4=100,append(Buffer,[108,101,116,116,101,114],BufferN),
+								  replace_word(T,BufferN,NL),!.
+replace_word([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),replace_word(T,BufferN,NL),!.								  	
+
 		%___________17___________
+remove_x_abc:-read_str(St,_),remove_x_abc(St,[],NL),write_str(NL).
+remove_x_abc([],NL,NL):-!.
+remove_x_abc([120,97,98,99|T],Buffer,NL):-append1(Buffer,[97,98,99],BufferN),remove_x_abc(T,BufferN,NL),!.
+remove_x_abc([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),remove_x_abc(T,BufferN,NL).
+
 		%___________18___________
 		%___________19___________
 		%___________20___________
