@@ -158,7 +158,7 @@ st_abc([_|T]):-st_abc(T).
 		%___________16___________
 replace_word:-read_str(St,_),replace_word(St,[],NL),write_str(NL).
 replace_word([],NL,NL):-!.
-replace_word([H1,H2,H3,H4|T],Buffer,NL):-H1=119,H2=111,H3=114,H4=100,append(Buffer,[108,101,116,116,101,114],BufferN),
+replace_word([119,111,114,100|T],Buffer,NL):-append(Buffer,[108,101,116,116,101,114],BufferN),
 								  replace_word(T,BufferN,NL),!.
 replace_word([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),replace_word(T,BufferN,NL),!.								  	
 
@@ -169,6 +169,11 @@ remove_x_abc([120,97,98,99|T],Buffer,NL):-append1(Buffer,[97,98,99],BufferN),rem
 remove_x_abc([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),remove_x_abc(T,BufferN,NL).
 
 		%___________18___________
+remove_abc_numb:-read_str(St,_),remove_abc_numb(St,[],NL),write_str(NL).
+remove_abc_numb([],NL,NL):-!.
+remove_abc_numb([97,98,99,H|T],Buffer,NL):-H>47,H<58,remove_abc_numb([H|T],Buffer,NL),!.
+remove_abc_numb([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),remove_abc_numb(T,BufferN,NL).
+
 		%___________19___________
 		%___________20___________
 		%___________21___________
