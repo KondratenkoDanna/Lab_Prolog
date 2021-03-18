@@ -175,5 +175,10 @@ remove_abc_numb([97,98,99,H|T],Buffer,NL):-H>47,H<58,remove_abc_numb([H|T],Buffe
 remove_abc_numb([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),remove_abc_numb(T,BufferN,NL).
 
 		%___________19___________
+kol_aba:-read_str(St,_),kol_aba(St,0,Kol),write(Kol).
+kol_aba([],K,K):-!.
+kol_aba([97,98,97|T],K,Kol):-K1 is K+1,kol_aba(T,K1,Kol),!.
+kol_aba([H|T],K,Kol):-kol_aba(T,K,Kol).
+
 		%___________20___________
 		%___________21___________
