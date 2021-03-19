@@ -178,7 +178,18 @@ remove_abc_numb([H|T],Buffer,NL):-append1(Buffer,[H],BufferN),remove_abc_numb(T,
 kol_aba:-read_str(St,_),kol_aba(St,0,Kol),write(Kol).
 kol_aba([],K,K):-!.
 kol_aba([97,98,97|T],K,Kol):-K1 is K+1,kol_aba(T,K1,Kol),!.
-kol_aba([H|T],K,Kol):-kol_aba(T,K,Kol).
+kol_aba([_|T],K,Kol):-kol_aba(T,K,Kol).
 
 		%___________20___________
+widespace:-read_str(St,_),widespace(St,0,[],NSt),widespace(NSt,StStart),widespace(Stroka,StStart,5),write_str(Stroka).
+widespace([],_,NL,NL):-!.
+widespace([32|T],0,Buffer,NL):-append1(Buffer,[32],BufferN),widespace(T,1,BufferN,NL),!.
+widespace([32|T],KolWS,Buffer,NL):-widespace(T,KolWS,Buffer,NL),!.
+widespace([H|T],_,Buffer,NL):-append1(Buffer,[H],BufferN),widespace(T,0,BufferN,NL),!.
+widespace([32|T],NSt):-widespace(T,NSt),!.
+widespace(Nst,Nst):-!.
+widespace(NList,List,5):-reverse(List,ListR),widespace(ListR,NListR),reverse(NListR,NList),!.
+
+
+
 		%___________21___________
