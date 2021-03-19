@@ -190,7 +190,7 @@ widespace([H|T],_,Buffer,NL):-append1(Buffer,[H],BufferN),widespace(T,0,BufferN,
 widespace([32|T],NSt):-widespace(T,NSt),!.
 widespace(Nst,Nst):-!.
 
-		%___________21___________
+		%___________21.1___________
 splitting:-read_str([H|T],_),read_str(St2,_),(in_list(St2,H) -> splitting(T,St2,[],[],LW);splitting([H|T],St2,[],[],LW)),
 		   write_list_str(LW).
 splitting([],_,[],LW,LW):-!.
@@ -198,3 +198,13 @@ splitting([],_,LastWord,LW,ListWord):-append1(LW,[LastWord],ListWord),!.
 splitting([H|T],List2,BufferWord,LW,ListWord):-not(in_list(List2,H)),append1(BufferWord,[H],BufferWordN),	
 												   splitting(T,List2,BufferWordN,LW,ListWord),!.
 splitting([H1|T],List2,BufferWord,LW,ListWord):-append1(LW,[BufferWord],NLW),splitting(T,List2,[],NLW,ListWord).	
+
+		%___________21.2___________
+print_sr:-read_str(St,Length),print_sr(St),print_sr(St,Length).
+print_sr([H|T]):-write("First = "),put(H),nl,reverse([H|T],[HR|TR]),write("End = "),put(HR),nl.
+print_sr(List,Length):-not(0 is Length mod 2),L is Length div 2+1,index(List,El,L,0),write("Middle = "),put(El),!.
+print_sr(List,Length):-true.
+
+index([H|T],El,Num):-index([H|T],El,Num,0).
+index([H|T],El,Num,Chet):-Chet1 is Chet+1,(H = El,Num = Chet1 -> !;index(T,El,Num,Chet1)).
+
