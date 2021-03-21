@@ -18,10 +18,10 @@ reverse(A, Z) :- reverse(A,Z,[]).
 reverse([],Z,Z).
 reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
 
-min_list_down([H|T],Min):-min_list_down([H|T],255,Min).
-min_list_down([],Min,Min):-!.
-min_list_down([H|T],M,Min):-(H<M -> M1 is H,min_list_down(T,M1,Min);
-		            min_list_down(T,M,Min)).
+min_list_lists([[H|T]|T1],Min):-min_list_lists([[H|T]|T1],255,Buf,Min).
+min_list_lists([],_,M,M):-!.
+min_list_lists([[H|T]|T1],M,Buf,Min):-(H<M -> M1 is H,min_list_lists(T1,M1,[H|T],Min);
+		            min_list_lists(T1,M,Buf,Min)).
 
 reverse_list(List,ListR):-reverse_list(List,[],ListR).
 reverse_list([],Buffer,Buffer):-!.
@@ -54,11 +54,11 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 								  often_word_in_list(T,W1,Word,K1,Kol1);often_word_in_list(T,W,Word,K,Kol)).
 								  
 		%___________4___________
-concl:-read_str(A,Length),(Length>5 -> concl(A),reverse(A,AR),concl(AR);
-	   concl(A,Length)).
+concl:-read_str(A,Length),(Length>5 -> concl(A),reverse(A,AR),conclL(AR);concl(A,Length)).
 concl([H1|[H2|[H3|_]]]):-put(H1),put(H2),put(H3),!.
 concl([_|_],0):-!.
 concl([H|T],Length):-put(H),L1 is Length-1,concl([H|T],L1).
+conclL([H1|[H2|[H3|_]]]):-put(H3),put(H2),put(H1),!.
 
 length_list([],0):-!.
 length_list([_|T],L):-length_list(T,L1),L is L1+1.
@@ -120,16 +120,16 @@ l_str(StN,12,_,StN):-!.
 l_str(St,L,Length,StN):-L1 is L+1,append1(St,[111],St1),l_str(St1,L1,Length,StN).
 
 		%___________12___________///////////////////////////////////////
-%fragments:-read_str(St,_),fragments(St,LFr),wri,sort(LFr).
-%%fragments([],LFr):-!.
-%fragments([H1,H2,H3|T],LFr):-rand_fr([H1,H2,H3],R),fragments(T,[R|LFr]).
-%rand_fr([H1,H2,H3],R):-H is random(256),(not(in_list([H1,H2,H3],H)) -> R = [H1,H,H3];
-%					   rand_fr([H1,H2,H3],R)).					   
+fragments:-read_str(St,_),fragments(St,[],LFr),sort(LFr).
+fragments([],LFr,LFr):-!.
+fragments([H1,H2,H3|T],LFr,LF):-rand_fr([H1,H2,H3],R),append1(LFr,[R],LFr1),fragments(T,LFr1,LF),!.
+rand_fr([H1,H2,H3],R):-H is random(256),(not(in_list([H1,H2,H3],H)) -> R = [H1,H,H3];
+					   rand_fr([H1,H2,H3],R)).					   
 
-%sort([]):-!.
-%sort([H|T]):-min_list_down([H|T],Min),write_str(Min),remove_number([H|T],Min,LN),sort(LN).
+sort([]):-!.
+sort([H|T]):-min_list_lists([H|T],Min),write_str(Min),remove_number([H|T],Min,LN),sort(LN).
 
-remove_number([H1|T1],X,List):-remove_number([H1|T1],[],List,X).
+remove_number([[H1|T]|T1],X,List):-remove_number([H1|T1],[],List,X).
 remove_number([],Buffer,List2,_):-reverse_list(Buffer,List2),!.
 remove_number([H1|T1],Buffer,List2,X):-(H1=X -> remove_number(T1,Buffer,X);
 								 remove_number(T1,[H1|Buffer],List2,X)).
