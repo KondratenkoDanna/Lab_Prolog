@@ -54,10 +54,10 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 								  often_word_in_list(T,W1,Word,K1,Kol1);often_word_in_list(T,W,Word,K,Kol)).
 								  
 		%___________4___________
-concl:-read_str(A,Length),(Length>5 -> concl(A),reverse(A,AR),conclL(AR);concl(A,Length)).
+concl:-read_str(A,Length),(Length>5 -> concl(A),reverse(A,AR),conclL(AR);concl(A,Length)),!.
 concl([H1|[H2|[H3|_]]]):-put(H1),put(H2),put(H3),!.
 concl([_|_],0):-!.
-concl([H|T],Length):-put(H),L1 is Length-1,concl([H|T],L1).
+concl([H|T],Length):-put(H),L1 is Length-1,concl([H|T],L1),!.
 conclL([H1|[H2|[H3|_]]]):-put(H3),put(H2),put(H1),!.
 
 length_list([],0):-!.
