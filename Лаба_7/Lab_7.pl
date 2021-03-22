@@ -119,7 +119,7 @@ l_str(St,StN):- StN = [_,_,_,_,_,_],append1(StN,_,St),!.
 l_str(StN,12,_,StN):-!.
 l_str(St,L,Length,StN):-L1 is L+1,append1(St,[111],St1),l_str(St1,L1,Length,StN).
 
-		%___________12___________///////////////////////////////////////
+		%___________12___________
 fragments:-read_str(St,_),fragments(St,[],LFr),sort(LFr).
 fragments([],LFr,LFr):-!.
 fragments([H1,H2,H3|T],LFr,LF):-rand_fr([H1,H2,H3],R),append1(LFr,[R],LFr1),fragments(T,LFr1,LF),!.
@@ -129,9 +129,9 @@ rand_fr([H1,H2,H3],R):-H is random(256),(not(in_list([H1,H2,H3],H)) -> R = [H1,H
 sort([]):-!.
 sort([H|T]):-min_list_lists([H|T],Min),write_str(Min),remove_number([H|T],Min,LN),sort(LN).
 
-remove_number([[H1|T]|T1],X,List):-remove_number([H1|T1],[],List,X).
+remove_number([H1|T1],X,List):-remove_number([H1|T1],[],List,X).
 remove_number([],Buffer,List2,_):-reverse_list(Buffer,List2),!.
-remove_number([H1|T1],Buffer,List2,X):-(H1=X -> remove_number(T1,Buffer,X);
+remove_number([H1|T1],Buffer,List2,X):-(H1=X -> remove_number(T1,Buffer,List2,X);
 								 remove_number(T1,[H1|Buffer],List2,X)).
 
 		%___________13___________
