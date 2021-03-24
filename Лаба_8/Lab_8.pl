@@ -58,4 +58,10 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 		%______________5______________
 		%______________6.2______________
 		%______________6.10______________
+kol_A:-see('c:/Users/danna/Desktop/output.txt'),read_str(St,_,1),seen,
+	   tell('c:/Users/danna/Desktop/input.txt'),kol_A(St,0,K),write(K),told.	
+kol_A([],K,K):-!.
+kol_A([H|T],K,Kol):-H=65,K1 is K+1,kol_A(T,K1,Kol),!.
+kol_A([H|T],K,Kol):-kol_A(T,K,Kol).
+
 		%______________6.17______________
