@@ -38,6 +38,13 @@ kol_st_no_zero([H|T],K,Kol):-not(in_list(H,32)),K1 is K+1,kol_st_no_zero(T,K1,Ko
 kol_st_no_zero([H|T],K,Kol):-kol_st_no_zero(T,K,Kol),!.
 
 		%______________3______________
+sr_A:-see('c:/Users/danna/Desktop/output.txt'),read_list_str(List),seen,
+	  tell('c:/Users/danna/Desktop/input.txt'),kol_A_in_list(List,0,KA),
+	  sr_kol_A(List,KA,SrA),write(SrA),told.
+sr_kol_A([H|T],KolA,SrA):-length_word([H|T],L),SrA is KolA div L.
+kol_A_in_list([],K,K):-!.
+kol_A_in_list([H|T],K,Kol):-kol_A(H,0,KolA),K1 is K+KolA,kol_A_in_list(T,K1,Kol).
+
 		%______________4______________
 list_words:-read_str(A,_),append1([32],A,A1),reverse(A1,AR),list_words(AR,[],_,[]).%LW
 list_words([],LW,LW,_):-!.
