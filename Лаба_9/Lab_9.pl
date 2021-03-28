@@ -105,6 +105,17 @@ aa_razm_:-make_ar(5,Pos),sochet(Pos_a,2,Pos),put_pos(Word,Pos_a,[97]),
 		 write_str(Word),nl,fail.
 
 		%______________4______________
+symb_razm:-tell('c:/Users/danna/Desktop/output.txt'),not(symb_razm_),told.
+symb_razm_:-make_ar(5,Pos),sochet(Pos_simb,2,Pos),in_list([98,99,100,101,102],Simbol),
+		 put_pos(Word,Pos_simb,[Simbol]),
+		 in_list_exlude([98,99,100,101,102],S1,NList),
+		 in_free_pos(Word,S1),
+		 in_list_exlude(NList,S2,NList1),
+		 in_free_pos(Word,S2),
+		 in_list_exlude(NList1,S3,NList2),
+		 in_free_pos(Word,S3),
+		 write_str(Word),nl,fail.
+
 		%______________5______________
 		%______________6______________
 		%______________7______________
