@@ -68,7 +68,7 @@ wr_file_sochet_p:-read_str(A,_),read(K),tell('c:/Users/danna/Desktop/output.txt'
 make_ar(0,[]):-!.
 make_ar(K,[K|Tail]):-K1 is K-1,make_ar(K1,Tail).
 
-aa_razm_p:-tell('c:/Users/danna/Desktop/output.txt'),not(aa_razm_),told.
+aa_razm_p:-tell('c:/Users/danna/Desktop/output.txt'),not(aa_razm_P),told.
 aa_razm_P:-make_ar(5,Pos),sochet(Pos_a,2,Pos),put_pos(Word,Pos_a,[97]),
 		 in_list([98,99,100,101,102],S1),
 		 in_free_pos(Word,S1),
@@ -136,7 +136,7 @@ select_pos6(Word,Head,Sim):-(Head is 1->Word=[Sim,_,_,_,_,_],!);
 								 (Head is 2->Word=[_,Sim,_,_,_,_],!);
 								 (Head is 3->Word=[_,_,Sim,_,_,_],!);
 								 (Head is 4->Word=[_,_,_,Sim,_,_],!);
-								 (Head is 5->Word=[_,_,_,_,Sim,_]),!;
+								 (Head is 5->Word=[_,_,_,_,Sim,_],!);
 								 (Head is 6->Word=[_,_,_,_,_,Sim]).
 
 in_free_pos6([H1,H2,H3,H4,H5,H6],Sim):-(var(H1)->H1 is Sim),!;
