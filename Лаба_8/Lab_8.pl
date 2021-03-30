@@ -23,6 +23,9 @@ length_word([_|T],L):-length_word(T,L1),L is L1+1.
 in_list([El|_],El).
 in_list([_|T],El):-in_list(T,El).
 
+in_list_([El|_],El):-!.
+in_list_([_|T],El):-in_list_(T,El).
+
 reverse(A, Z) :- reverse(A,Z,[]).
 reverse([],Z,Z).
 reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
@@ -107,11 +110,17 @@ file_name([46|T],NameF,NameF):-!.
 file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
 file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
 		%______________3.0______________
-		%______________4.2______________97 122
-all_lat:-read_str(S,_,0),all_lat(S,[],S1),write_str(S1).
+		%______________4.2______________
+all_lat:-see('c:/Users/danna/Desktop/input.txt'),read_str(S,_,1),seen,all_lat(S,[],S1),write_str(S1).
 all_lat([],S,S):-!.
 all_lat([H|T],Buf,Str):-(H<123,H>96;H=32),append1(Buf,[H],Buf1),all_lat(T,Buf1,Str),!.
 all_lat([H|T],Buf,Str):-all_lat(T,Buf,Str).
 
 		%______________4.10______________
+involved_simb:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,0),seen,involved_simb(A,[],Str),write_str(Str).
+involved_simb([],Str,Str):-!.
+involved_simb([32|T],Buf,Str):-involved_simb(T,Buf,Str),!.
+involved_simb([H|T],Buf,Str):-in_list_(Buf,H),involved_simb(T,Buf,Str),!.
+involved_simb([H|T],Buf,Str):-append(Buf,[H],Buf1),involved_simb(T,Buf1,Str).
+
 		%______________4.17______________
