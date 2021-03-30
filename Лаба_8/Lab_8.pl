@@ -106,3 +106,12 @@ file_name:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
 file_name([46|T],NameF,NameF):-!.
 file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
 file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
+		%______________3.0______________
+		%______________4.2______________97 122
+all_lat:-read_str(S,_,0),all_lat(S,[],S1),write_str(S1).
+all_lat([],S,S):-!.
+all_lat([H|T],Buf,Str):-(H<123,H>96;H=32),append1(Buf,[H],Buf1),all_lat(T,Buf1,Str),!.
+all_lat([H|T],Buf,Str):-all_lat(T,Buf,Str).
+
+		%______________4.10______________
+		%______________4.17______________
