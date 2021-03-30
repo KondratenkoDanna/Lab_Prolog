@@ -73,35 +73,34 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 					    often_word_in_list(T,W1,Word,K1,Kol1);often_word_in_list(T,W,Word,K,Kol)).
 
 
-		%______________5______________///////////////
-%no_repeat_str:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
-%	           tell('c:/Users/danna/Desktop/output.txt'),list_words_all_file(A,[],ListWordAllFile),
-%			   no_repeat_str(A,ListWordAllFile),told.
-%no_repeat_str([]):-!.
-%no_repeat_str([H|T],LW):-list_words(H,[H1|T1]),kol_repeat_in_list([H|T],H,K),K>1,write_str(H),nl,no_repeat_str(T,LW),!.
-%no_repeat_str([H|T],LW):-no_repeat_str(T,LW).
+		%______________5______________////////////////////////////////////////////////
+no_repeat_str:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
+	           tell('c:/Users/danna/Desktop/output.txt'),list_words_all_file(A,[],ListWordAllFile),
+			   proverka_(ListWordAllFile,A),told.
+			  
+proverka_(_,[]):-!.
+proverka_(ListWordAllFile,[H|T]):- list_words(H,ListWordInStr),
+					proverka(ListWordAllFile,ListWordInStr),write_str(H),nl,proverka_(ListWordAllFile,T),!.
+proverka_(ListWordAllFile,[_|T]):-proverka_(ListWordAllFile,T).
+proverka(_,[]):-true,!.
+proverka(AllListWord,[H|T]):-kol_repeat_in_list(AllListWord,H,KolPovt),KolPovt<2,proverka(AllListWord,T),!.
+proverka(AllListWord,[H|T]):-!,fail.
 
-%repeat_in_list([H|T],X):-repeat_in_list([H|T],X).
-%repeat_in_list([],_):-true,!.
-%repeat_in_list([H|T],X,K,Kol):-H=X,fail,!.
-%repeat_in_list([H|T],X,K,Kol):-repeat_in_list(T,X).
-%pr_in_list(ListW,[H|T]):-in_list().								
-
-		%______________6.2_____________
+		%______________2.2_____________
 sort_list:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
 		   tell('c:/Users/danna/Desktop/output.txt'),sort_list(A),told.
 sort_list([_]):-write("Yes"),!.
 sort_list([H1,H2|T]):-H1<H2,!,sort_list([H2|T]).
 sort_list([_,_|_]):-write("No"),!.
 
-		%______________6.10______________
+		%______________2.10______________
 kol_A:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
 	   tell('c:/Users/danna/Desktop/output.txt'),kol_A(St,0,K),write(K),told.	
 kol_A([],K,K):-!.
 kol_A([H|T],K,Kol):-H=65,K1 is K+1,kol_A(T,K1,Kol),!.
 kol_A([_|T],K,Kol):-kol_A(T,K,Kol).
 
-		%______________6.17______________
+		%______________2.17______________
 file_name:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
 		   tell('c:/Users/danna/Desktop/output.txt'),file_name(St,[],NameFile),write_str(NameFile),told.
 file_name([46|T],NameF,NameF):-!.
