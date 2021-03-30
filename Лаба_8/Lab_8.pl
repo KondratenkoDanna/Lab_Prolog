@@ -124,3 +124,12 @@ involved_simb([H|T],Buf,Str):-in_list_(Buf,H),involved_simb(T,Buf,Str),!.
 involved_simb([H|T],Buf,Str):-append(Buf,[H],Buf1),involved_simb(T,Buf1,Str).
 
 		%______________4.17______________
+file_name:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
+		   tell('c:/Users/danna/Desktop/output.txt'),file_name(St,[],NameFile),write_str(NameFile),told.
+file_name([46|T],NameF,NameF):-!.
+file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
+file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
+
+		%______________5______________
+		%______________6______________
+		%______________7______________
