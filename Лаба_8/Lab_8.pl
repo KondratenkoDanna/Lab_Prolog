@@ -79,7 +79,7 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 		%______________5______________////////////////////////////////////////////////
 no_repeat_str:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
 	           tell('c:/Users/danna/Desktop/output.txt'),list_words_all_file(A,[],ListWordAllFile),
-			   proverka_(ListWordAllFile,A),told.
+			   proverka_(ListWordAllFile,ListWordAllFile),told.
 			  
 proverka_(_,[]):-!.
 proverka_(ListWordAllFile,[H|T]):- list_words(H,ListWordInStr),
@@ -123,12 +123,7 @@ involved_simb([32|T],Buf,Str):-involved_simb(T,Buf,Str),!.
 involved_simb([H|T],Buf,Str):-in_list_(Buf,H),involved_simb(T,Buf,Str),!.
 involved_simb([H|T],Buf,Str):-append(Buf,[H],Buf1),involved_simb(T,Buf1,Str).
 
-		%______________4.17______________
-file_name:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
-		   tell('c:/Users/danna/Desktop/output.txt'),file_name(St,[],NameFile),write_str(NameFile),told.
-file_name([46|T],NameF,NameF):-!.
-file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
-file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
+		%______________4.17______________ - 2.17
 
 		%______________5______________
 		%______________6______________
