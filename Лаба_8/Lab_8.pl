@@ -76,7 +76,7 @@ often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> 
 					    often_word_in_list(T,W1,Word,K1,Kol1);often_word_in_list(T,W,Word,K,Kol)).
 
 
-		%______________5______________////////////////////////////////////////////////
+		%______________5______________
 no_repeat_str:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
 	           tell('c:/Users/danna/Desktop/output.txt'),list_words_all_file(A,[],ListWordAllFile),
 			   proverka_(ListWordAllFile,ListWordAllFile),told.
@@ -110,6 +110,21 @@ file_name([46|T],NameF,NameF):-!.
 file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
 file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
 		%______________3.0______________
+d:-read_str(A,_,0),date(A,Res),write_list_str(Res).
+date(List,Res):-date(List,[],Res).
+date([],Res,Res):-!.
+date([H|T],Buffer,Res):-date_check([H|T],DMY),append1(Buffer,[DMY],Buf1),!,date(T,Buf1,Res).
+date([H|T],Buf,Res):-date(T,Buf,Res).
+date_check(List,DMY):-date_day(List,Day,Date),date_month(Date,Month,Date1),date_year(Date1,Year,Date2),
+				append1(Day,Month,DM),append1(DM,Year,DMY),!.
+date_day([H1,H2,32|T],Buf,Date):-H1<52,H1>47,H2>47,H2<58,Buf=[H1,H2,32],Date=T,!.
+date_month(List,Month,Date):-date_month(List,[],Month,Date),!.
+date_month([32|T],Buf,Month,T):-append1(Buf,[32],Month),!.
+date_month([H|T],Buf,Month,Date):-H<123,H>96,append1(Buf,[H],Buf1),date_month(T,Buf1,Month,Date),!.
+date_year([H1,H2,H3,H4|T],Buf,Date):-H1<58,H1>47,H2>47,H2<58,H3>47,H3<58,H4>47,H4<58,
+								   Buf=[H1,H2,H3,H4],Date = T,!.
+
+
 		%______________4.2______________
 all_lat:-see('c:/Users/danna/Desktop/input.txt'),read_str(S,_,1),seen,all_lat(S,[],S1),write_str(S1).
 all_lat([],S,S):-!.
