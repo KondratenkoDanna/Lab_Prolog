@@ -87,7 +87,7 @@ proverka_(ListWordAllFile,[H|T]):- list_words(H,ListWordInStr),
 proverka_(ListWordAllFile,[_|T]):-proverka_(ListWordAllFile,T).
 proverka(_,[]):-true,!.
 proverka(AllListWord,[H|T]):-kol_repeat_in_list(AllListWord,H,KolPovt),KolPovt<2,proverka(AllListWord,T),!.
-proverka(AllListWord,[H|T]):-!,fail.
+proverka(_,[_|_]):-!,fail.
 
 		%______________2.2_____________
 sort_list:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
@@ -106,11 +106,12 @@ kol_A([_|T],K,Kol):-kol_A(T,K,Kol).
 		%______________2.17______________
 file_name:-see('c:/Users/danna/Desktop/input.txt'),read_str(St,_,1),seen,
 		   tell('c:/Users/danna/Desktop/output.txt'),file_name(St,[],NameFile),write_str(NameFile),told.
-file_name([46|T],NameF,NameF):-!.
+file_name([46|_],NameF,NameF):-!.
 file_name([H|T],Buf,NameF):-H=47,Name1 = Buf,file_name(T,[],NameF),!.
 file_name([H|T],Buf,NameF):-append1(Buf,[H],BufN),file_name(T,BufN,NameF).
+
 		%______________3.0______________
-d:-read_str(A,_,0),date(A,Res),write_list_str(Res).
+d:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,date(A,Res),write_list_str(Res).
 date(List,Res):-date(List,[],Res).
 date([],Res,Res):-!.
 date([H|T],Buffer,Res):-date_check([H|T],DMY),append1(Buffer,[DMY],Buf1),!,date(T,Buf1,Res).
@@ -124,12 +125,11 @@ date_month([H|T],Buf,Month,Date):-H<123,H>96,append1(Buf,[H],Buf1),date_month(T,
 date_year([H1,H2,H3,H4|T],Buf,Date):-H1<58,H1>47,H2>47,H2<58,H3>47,H3<58,H4>47,H4<58,
 								   Buf=[H1,H2,H3,H4],Date = T,!.
 
-
 		%______________4.2______________
 all_lat:-see('c:/Users/danna/Desktop/input.txt'),read_str(S,_,1),seen,all_lat(S,[],S1),write_str(S1).
 all_lat([],S,S):-!.
 all_lat([H|T],Buf,Str):-(H<123,H>96;H=32),append1(Buf,[H],Buf1),all_lat(T,Buf1,Str),!.
-all_lat([H|T],Buf,Str):-all_lat(T,Buf,Str).
+all_lat([_|T],Buf,Str):-all_lat(T,Buf,Str).
 
 		%______________4.10______________
 involved_simb:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,0),seen,involved_simb(A,[],Str),write_str(Str).
@@ -140,6 +140,24 @@ involved_simb([H|T],Buf,Str):-append(Buf,[H],Buf1),involved_simb(T,Buf1,Str).
 
 		%______________4.17______________ - 2.17
 
-		%______________5______________
+		%______________5______________от больш к мень
+order_str_length:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,list_words(A,LW),
+				  order_str_length(LW,[],List),write_list_str(List).
+order_str_length([],List,List):-!.
+order_str_length([H|T],Buf,ListStr):-max_l_w([H|T],0,K,H,StrokaMax),append1(Buf,[StrokaMax],Buf1),
+						remove_str([H|T],StrokaMax,NList),order_str_length(NList,Buf1,ListStr),!.
+order_str_length([H|T],Buf,ListStr):-order_str_length(T,Buf,ListStr).
+
+max_l_w([],K,K,S,S):-!.
+max_l_w([H|T],K,Kol,S,StrokaMax):-length_word(H,L),(L>K -> K1 is L,S1=H,max_l_w(T,K1,Kol,S1,StrokaMax);
+								  max_l_w(T,K,Kol,S,StrokaMax)).
+
+remove_str([H1|T1],X,List):-remove_str([H1|T1],[],List,X).
+remove_str([],List2,List2,_):-!.
+remove_str([H1|T1],Buffer,List2,X):-(H1=X -> remove_str(T1,Buffer,List2,X);
+									append1(Buffer,[H1],Buffer1),remove_str(T1,Buffer1,List2,X)).
+
 		%______________6______________
 		%______________7______________
+
+n:-nodebug.
