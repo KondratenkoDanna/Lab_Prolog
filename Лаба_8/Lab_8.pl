@@ -2,7 +2,7 @@ write_str([]):-!.
 write_str([H|Tail]):-put(H),write_str(Tail).
 
 write_list_str([]):-!.
-write_list_str([H|T]):-write_str(H),nl,write_list_str(T).
+write_list_str([H|T]):-write_str(H),write(" "),write_list_str(T).
 
 read_str(A,N,Flag):-get0(X),r_str(X,A,[],N,0,Flag).
 r_str(-1,A,A,N,N,1):-!.
@@ -11,11 +11,6 @@ r_str(X,A,B,N,K,Flag):-K1 is K+1,append(B,[X],B1),get0(X1),r_str(X1,A,B1,N,K1,Fl
 
 append1([],List2,List2).
 append1([H1|T1],List2,[H1|T3]):-append1(T1,List2,T3).
-
-read_list_str(List):-read_str(A,_,Flag),read_list_str([A],List,Flag).
-read_list_str(List,List,1):-!.
-read_list_str(Cur_list,List,0):-
-	read_str(A,_,Flag),append(Cur_list,[A],C_l),read_list_str(C_l,List,Flag).
 
 length_word([],0):-!.
 length_word([_|T],L):-length_word(T,L1),L is L1+1.
@@ -29,6 +24,11 @@ in_list_([_|T],El):-in_list_(T,El).
 reverse(A, Z) :- reverse(A,Z,[]).
 reverse([],Z,Z).
 reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
+
+read_list_str(List):-read_str(A,_,Flag),read_list_str([A],List,Flag).
+read_list_str(List,List,1):-!.
+read_list_str(Cur_list,List,0):-
+	read_str(A,_,Flag),append(Cur_list,[A],C_l),read_list_str(C_l,List,Flag).
 
 		%______________1______________
 max_l_w:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(List),seen,
@@ -56,10 +56,10 @@ write_stroka_srA([H|T],SrKolA):-kol_A(H,0,K),K>SrKolA,write_str(H),nl,write_stro
 write_stroka_srA([_|T],SrKolA):-write_stroka_srA(T,SrKolA),!.
 
 		%______________4______________
-list_words(A,LW):-append1([32],A,A1),reverse(A1,AR),list_words(AR,[],LW,[]).
+list_words(A,LW):-append1(A,[32],Apr),list_words(Apr,[],LW,[]).
 list_words([],LW,LW,_):-!.
-list_words([H|T],LW,LWN,W):-((H=32;H=10) -> append([W],LW,LW1),list_words(T,LW1,LWN,[]);
-						 append1([H],W,W1),list_words(T,LW,LWN,W1)).
+list_words([H|T],LW,LWN,W):-((H=32;H=10) -> append1(LW,[W],LW1),list_words(T,LW1,LWN,[]);
+						 append1(W,[H],W1),list_words(T,LW,LWN,W1)).
 list_words_all_file([],ListAllWord,ListAllWord):-!.
 list_words_all_file(Stroka,List,ListAllWord):-list_words(Stroka,LW),append1(List,LW,ListAllWord).
 
@@ -74,7 +74,6 @@ often_word_in_list:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen
 often_word_in_list([],Word,Word,Kol,Kol):-!.
 often_word_in_list([H|T],W,Word,K,Kol):-kol_repeat_in_list([H|T],H,K1),(K1>K -> Kol1 = K1,W1=H,
 					    often_word_in_list(T,W1,Word,K1,Kol1);often_word_in_list(T,W,Word,K,Kol)).
-
 
 		%______________5______________
 no_repeat_str:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,
@@ -157,7 +156,30 @@ remove_str([],List2,List2,_):-!.
 remove_str([H1|T1],Buffer,List2,X):-(H1=X -> remove_str(T1,Buffer,List2,X);
 									append1(Buffer,[H1],Buffer1),remove_str(T1,Buffer1,List2,X)).
 
-		%______________6______________
+		%______________6______________////////////////////////
+order_str_kol_word:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(A),seen,
+							list_strok_in_word(A,[],List),order_str_length(List,[],OrList),
+							write_list_str_(OrList).
+
+write_list_str_([]):-!.
+write_list_str_([H|T]):-write_list_str(H),nl,write_list_str_(T).
+
+list_strok_in_word([],L,L):-!.			
+list_strok_in_word([H|T],Buf,List):-list_words(H,ListWordInStrok),append1(Buf,[ListWordInStrok],Buf1),
+						list_strok_in_word(T,Buf1,List).
+
+list_strok(A,LW):-append1([32],A,A1),reverse(A1,AR),list_strok(AR,[],LW,[]).
+list_strok([],LW,LWN,W):-append1([W],LW,LWN),!.
+list_strok([H|T],LW,LWN,W):-(H=10 -> append1([W],LW,LW1),list_strok(T,LW1,LWN,[]);
+						 append1([H],W,W1),list_strok(T,LW,LWN,W1)).
+
+list_strings(A,LW):-append1(A,[32],Apr),list_strings(Apr,[],LW,[]).
+list_strings([],LW,LW,_):-!.
+list_strings([H|T],LW,LWN,W):-(H=10 -> append1(LW,[W],LW1),list_strings(T,LW1,LWN,[]);
+						 append1(W,[H],W1),list_strings(T,LW,LWN,W1)).
+
 		%______________7______________
+		
+
 
 n:-nodebug.
