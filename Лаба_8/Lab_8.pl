@@ -2,7 +2,7 @@ write_str([]):-!.
 write_str([H|Tail]):-put(H),write_str(Tail).
 
 write_list_str([]):-!.
-write_list_str([H|T]):-write_str(H),write(" "),write_list_str(T).
+write_list_str([H|T]):-write_str(H),nl,write_list_str(T).
 
 read_str(A,N,Flag):-get0(X),r_str(X,A,[],N,0,Flag).
 r_str(-1,A,A,N,N,1):-!.
@@ -27,8 +27,8 @@ reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
 
 read_list_str(List):-read_str(A,_,Flag),read_list_str([A],List,Flag).
 read_list_str(List,List,1):-!.
-read_list_str(Cur_list,List,0):-
-	read_str(A,_,Flag),append(Cur_list,[A],C_l),read_list_str(C_l,List,Flag).
+read_list_str(Cur_list,List,0):-read_str(A,_,Flag),append(Cur_list,[A],C_l),
+								read_list_str(C_l,List,Flag).
 
 		%______________1______________
 max_l_w:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(List),seen,
@@ -139,9 +139,9 @@ involved_simb([H|T],Buf,Str):-append(Buf,[H],Buf1),involved_simb(T,Buf1,Str).
 
 		%______________4.17______________ - 2.17
 
-		%______________5______________от больш к мень
-order_str_length:-see('c:/Users/danna/Desktop/input.txt'),read_str(A,_,1),seen,list_words(A,LW),
-				  order_str_length(LW,[],List),write_list_str(List).
+		%______________5______________
+order_str_length:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(A),seen,
+				  order_str_length(A,[],List),write_list_str(List).
 order_str_length([],List,List):-!.
 order_str_length([H|T],Buf,ListStr):-max_l_w([H|T],0,K,H,StrokaMax),append1(Buf,[StrokaMax],Buf1),
 						remove_str([H|T],StrokaMax,NList),order_str_length(NList,Buf1,ListStr),!.
@@ -156,13 +156,16 @@ remove_str([],List2,List2,_):-!.
 remove_str([H1|T1],Buffer,List2,X):-(H1=X -> remove_str(T1,Buffer,List2,X);
 									append1(Buffer,[H1],Buffer1),remove_str(T1,Buffer1,List2,X)).
 
-		%______________6______________////////////////////////
-order_str_kol_word:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(A),seen,
+		%______________6______________
+ order_str_kol_word:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(A),seen,
 							list_strok_in_word(A,[],List),order_str_length(List,[],OrList),
 							write_list_str_(OrList).
 
 write_list_str_([]):-!.
-write_list_str_([H|T]):-write_list_str(H),nl,write_list_str_(T).
+write_list_str_([H|T]):-write_list_str1(H),nl,write_list_str_(T).
+
+write_list_str1([]):-!.
+write_list_str1([H|T]):-write_str(H),write(" "),write_list_str1(T).
 
 list_strok_in_word([],L,L):-!.			
 list_strok_in_word([H|T],Buf,List):-list_words(H,ListWordInStrok),append1(Buf,[ListWordInStrok],Buf1),
@@ -179,7 +182,19 @@ list_strings([H|T],LW,LWN,W):-(H=10 -> append1(LW,[W],LW1),list_strings(T,LW1,LW
 						 append1(W,[H],W1),list_strings(T,LW,LWN,W1)).
 
 		%______________7______________
-		
+list_word_after_num([],ListAfterNum,ListAfterNum):-!.
+list_word_after_num([[H|T1]|T],Buf,ListAfterNum):-(H>47,H<58 -> list_word_after_num(T,[],ListAfterNum);
+											append1(Buf,[[H|T1]],Buf1),list_word_after_num(T,Buf1,ListAfterNum)).
 
+k_after_num([],K,K,S,S):-!.
+k_after_num([H|T],K,Kol,S,StrokaMax):-list_word_after_num(H,[],H1),length_word(H1,L),(L>K -> K1 is L,S1=H,
+								  k_after_num(T,K1,Kol,S1,StrokaMax);k_after_num(T,K,Kol,S,StrokaMax)).
+
+sort_after_num:-see('c:/Users/danna/Desktop/input.txt'),read_list_str(A),seen,list_strok_in_word(A,[],ListS),
+				  sort_after_num(ListS,[],List),write_list_str_(List).
+sort_after_num([],List,List):-!.
+sort_after_num([H|T],Buf,ListStr):-k_after_num([H|T],0,K,H,StrokaMax),append1(Buf,[StrokaMax],Buf1),
+						remove_str([H|T],StrokaMax,NList),sort_after_num(NList,Buf1,ListStr),!.
+sort_after_num([H|T],Buf,ListStr):-sort_after_num(T,Buf,ListStr).
 
 n:-nodebug.
